@@ -73,3 +73,54 @@ Comprobaciones básicas disponibles sin dependencias:
 node --check script.js
 git diff --check
 ```
+
+## Actualización: introducción cinematográfica
+
+Se conserva el sitio existente, sus secciones, textos, enlaces, servicios y configuración de contacto. Se suma una capa independiente de mejora progresiva:
+
+- `components/intro/intro.js`: reproducción, estados, límites de espera, salida y limpieza.
+- `components/intro/intro.css`: portada, partículas decorativas, título, transición y adaptación móvil.
+- `public/images/intro-poster.svg`: portada abstracta local y ligera.
+- `public/videos/README.md`: guion de las escenas, especificaciones y recurso pendiente.
+- `index.html`: diálogo de introducción y carga de sus dos archivos locales.
+- `style.css`: refinamientos de profundidad, hover y aparición al hacer scroll.
+
+**Falta el video realista `public/videos/programmer-intro.mp4`.** No se incluye ni se simula una persona hiperrealista. Sin el archivo, un error de reproducción o un rechazo del autoplay se muestra una identidad visual abstracta con el título y partículas durante unos 2,4 segundos, y se entra automáticamente al sitio. La espera inicial se limita a 1,8 segundos. Mientras carga se ve la portada.
+
+Con el MP4 disponible, la reproducción silenciosa usa `autoplay`, `muted` y `playsinline`. A partir del segundo 8 aparece el título HTML y al llegar al segundo 10 se inicia la salida. Un límite independiente cierra toda la introducción antes de 12,5 segundos, incluso si el video se queda cargando. Los videos cortos pasan al cierre de marca al terminar.
+
+### Comportamiento y accesibilidad
+
+- **Saltar introducción** y **Escape** permiten entrar inmediatamente; el foco vuelve al título principal o al elemento que estaba enfocado.
+- El diálogo nativo mantiene el foco dentro de la introducción mientras está abierta. Al salir se restaura el scroll y se liberan el video, listeners y temporizadores.
+- Con movimiento reducido, ahorro de datos informado por el navegador o conexión 2G informada, se omite la introducción y no se solicita el video.
+- Se reproduce una vez por pestaña/sesión. Los enlaces directos con `#seccion` también la omiten. Si Safari restringe el almacenamiento, la web sigue funcionando.
+- Sin JavaScript, si no carga el script o si el navegador no admite `<dialog>`, el sitio se muestra directamente.
+- Cambiar de pestaña o abandonar la página cierra la introducción para no reproducirla en segundo plano.
+- Para volver a probarla, abrí una pestaña nueva sin fragmento o ejecutá `sessionStorage.removeItem('tp-intro-seen-v1')` en la consola y recargá.
+
+### Compilación y publicación de esta actualización
+
+Este proyecto no tiene `package.json`, dependencias ni comando de compilación. Los archivos se sirven directamente; no hay un build que ejecutar. Validá la sintaxis con:
+
+```sh
+node --check script.js
+node --check components/intro/intro.js
+git diff --check
+```
+
+Agregá el MP4 real siguiendo `public/videos/README.md`. Conservá las rutas relativas: usar `/public/...` desde la raíz del dominio rompería el recurso en un sitio de proyecto de GitHub Pages.
+
+Para actualizar un sitio ya publicado, revisá y fusioná manualmente los cambios hacia la **rama que ya utiliza Pages**, sin cambiar su configuración. Esperá que el despliegue de Pages termine correctamente en Actions y probá la URL pública en una sesión nueva. La web existente y esta actualización se revisan en el mismo PR #1. Su rama contiene el sitio completo; `main` aún conserva el commit inicial. No se hace merge ni publicación automática desde esta actualización.
+
+La prueba automatizada de navegador no reemplaza la revisión del MP4 definitivo en Safari/iPhone físico: hasta aportar ese recurso no se puede validar su decodificación, encuadre o realismo.
+
+
+### Validación realizada de la introducción
+
+- Sintaxis de los dos scripts y `git diff --check` correctos.
+- Chromium/Playwright: video ausente (404), carga sin respuesta, autoplay rechazado, salto y Escape durante la carga, restauración del foco y scroll, una reproducción por sesión.
+- Acceso directo sin solicitar video con movimiento reducido, ahorro de datos, fragmento de URL y JavaScript desactivado.
+- Reproducción de un MP4 sintético temporal de 10 segundos para comprobar los eventos del reproductor, título desde el segundo 8 y salida automática. Ese archivo no forma parte del sitio ni es el video cinematográfico pendiente.
+- Sin desbordes horizontales en 320, 375, 768, 1024 y 1440 px; menú móvil operativo. Comparación del HTML de header, main y footer y del script de contactos con la versión anterior: conservados.
+- WebKit/Safari no disponible en el entorno. Falta revisión en iPhone físico y con el archivo audiovisual definitivo.

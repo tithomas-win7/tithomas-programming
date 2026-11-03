@@ -11,9 +11,26 @@
   <meta property="og:description" content="Transformamos ideas en experiencias digitales. Desarrollo web y software a medida para tu próximo paso.">
   <title>Tithomas Programming | Desarrollo Full Stack</title>
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./components/intro/intro.css">
   <script src="./script.js" defer></script>
+  <script src="./components/intro/intro.js" defer></script>
 </head>
 <body>
+  <!-- Progressive enhancement: closed and non-blocking until intro.js is ready. -->
+  <dialog class="tp-intro" id="tp-intro" aria-labelledby="tp-intro-title" aria-describedby="tp-intro-description" data-video="./public/videos/programmer-intro.mp4">
+    <div class="tp-intro__stage" aria-hidden="true">
+      <img class="tp-intro__poster" src="./public/images/intro-poster.svg" width="1600" height="900" alt="" fetchpriority="low">
+      <video class="tp-intro__video" muted autoplay playsinline webkit-playsinline preload="none" poster="./public/images/intro-poster.svg" tabindex="-1" disablepictureinpicture></video>
+      <div class="tp-intro__shade"></div>
+      <div class="tp-intro__particles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="tp-intro__brand"><span class="tp-intro__eyebrow">DE LA IDEA A LO POSIBLE</span><strong>TITHOMAS<br>PROGRAMMING</strong><span class="tp-intro__subtitle">FULL STACK DEVELOPMENT</span><p>Transformamos ideas en soluciones digitales</p></div>
+      <div class="tp-intro__timeline"><span></span></div>
+    </div>
+    <h2 class="tp-intro__sr" id="tp-intro-title">Introducción de Tithomas Programming</h2>
+    <p class="tp-intro__sr" id="tp-intro-description">Presentación visual sin sonido. Podés saltarla en cualquier momento o presionar Escape para acceder al sitio.</p>
+    <div class="tp-intro__top"><span aria-hidden="true">TITHOMAS <b>/ FULL STACK</b></span><button class="tp-intro__skip" type="button" autofocus>Saltar introducción <span aria-hidden="true">↗</span></button></div>
+    <p class="tp-intro__caption" aria-hidden="true">Una idea. Infinitas posibilidades.</p>
+  </dialog>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="site-header">
     <div class="container header-inner">
